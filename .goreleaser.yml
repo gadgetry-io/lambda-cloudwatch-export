@@ -1,11 +1,14 @@
 builds:
-  - binary: ecs-deploy
+  - binary: cloudwatch-export
     main: main.go
     goos:
       - linux
     goarch:
       - amd64
 
+snapshot:
+  name_template: SNAPSHOT-{{.Commit}}
+      
 archive:
   format: zip
   files:
