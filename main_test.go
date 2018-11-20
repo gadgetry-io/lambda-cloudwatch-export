@@ -29,8 +29,19 @@ func TestCloudwatchScheduledEventIdempotency(t *testing.T) {
 	}
 
 	test.AssertJsonsEqual(t, inputJSON, outputJSON)
-	CloudWatchEventsHandler(inputEvent)
 
+}
+
+func TestExportLogs(t *testing.T) {
+	inputJSON := []byte(`{"s3_bucket":"asdf", "s3_prefix":"logs", "log_group":"/prd/appname"}`)
+
+	var inputEvent BucketExportConfigs
+	err := json.Unmarshal(inputJSON, &inputEvent)
+	if err != nil {
+		t.Errorf("Could not unmarshal scheduled event: %v", err)
+	}
+
+	ExportLogs(inputEvent)
 }
 
 func TestCloudwatchScheduledEventRequestMalformedJson(t *testing.T) {
